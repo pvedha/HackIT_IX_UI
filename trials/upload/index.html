@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+
+<title>Dropzone simple example</title>
+
+
+<!--
+  DO NOT SIMPLY COPY THOSE LINES. Download the JS and CSS files from the
+  latest release (https://github.com/enyo/dropzone/releases/latest), and
+  host them yourself!
+-->
+<script src="dropzone.js"></script>
+<link rel="stylesheet" href="dropzone.css">
+
+<script>
+    function doForm(form) {
+        var response = form.submit();
+        return false;
+    }
+
+    function doFormX(form) {
+        //var response = form.submit();
+        return false;
+    }
+
+</script>
+<p>
+    This is the most minimal example of Dropzone. The upload in this example doesn't work, because there is no actual server to handle the file upload.
+</p>
+
+<!-- Change /upload-target to your upload address -->
+<form action="/Js/rest/upload/path?filePath=c:/temp/meow/folder with space/and_under_score" class="dropzone" enctype="multipart/form-data"></form>
+<form action="/Js/rest/upload/path?filePath=c:/temp/meow" class="dropzone" enctype="multipart/form-data">Not working in dropzone due to input tag
+    <input type="file" name="file" size="45" single />
+</form>
+
+<form action="/Js/rest/upload/path?filePath=c:/temp/meow" class="dropzone" enctype="multipart/form-data"></form>
+
+<form action="/Js/rest/upload/path/meow" class="dropzone" enctype="multipart/form-data"></form>
+
+
+
+<form action="/Js/rest/upload/base" method="post" onsubmit='return doForm(this);' enctype="multipart/form-data">
+
+    <p>Select a file :
+        <input type="file" name="file" size="45" />
+    </p>
+    <input type="submit" value="Upload PDF" />
+
+</form>
+
+<form action="/Js/rest/upload/base" method="post" onsubmit='return doFormX(this);' enctype="multipart/form-data">
+
+    <p>Select a file :
+        <input type="file" name="file" size="45" />
+    </p>
+    <input type="submit" value="Upload PDF" />
+
+</form>
+
+
+
+<form action="/Js/rest/upload/base" method="post" enctype="multipart/form-data">
+
+    <p>Select a single file :
+        <input type="file" name="file" size="45" single/>
+    </p>
+    <input type="submit" value="Upload PDF" />
+
+</form>
+
+
+Next two working, dont disturb
+<form action="/Js/rest/upload/base" method="post" enctype="multipart/form-data">
+
+    <p>Select a file :
+        <input type="file" name="file" size="45" />
+    </p>
+    <input type="submit" value="Upload PDF" />
+
+</form>
+
+<form action="/Js/rest/upload/base" method="post" enctype="multipart/form-data">
+
+    <p>Select a single file :
+        <input type="file" name="file" size="45" single/>
+    </p>
+    <input type="submit" value="Upload PDF" />
+
+</form>
+
+<form action="D:\\tmp" class="dropzone"></form>
+
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+</form>

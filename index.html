@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="DocApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--    <link rel="icon" href="../../favicon.ico">-->
+    <title>Smart Contract Manager</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/carousal.css" rel="stylesheet">
+    <link href="css/modal.css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src='js/angular.js'></script>
+    <script src="js/web3.js"></script>
+    <!--    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+    <!--    <script src="js/canvasjs-min.js"></script>-->
+    <script src="js/Chart.js"></script>
+    <script src='js/docAngular.js'></script>
+    <script src="js/access.js"></script>
+    <script src="js/post.js"></script>
+    <script src="js/js-md5.js"></script>
+    <script src="js/contracts.js"></script>
+    <script src='js/require.js'></script>
+    <script src="js/eth.js"></script>
+    <script src="js/docActions.js"></script>
+
+    <script src="js/views.js"></script>
+    <script src="js/utilities.js"></script>
+    <script src="js/users.js"></script>
+    <script src="js/blogModal.js"></script>
+    <!--    <script src="js/dropzone.js"></script>-->
+
+    <script type="application/javascript">
+        jQuery(document).ready(function($) {
+            showWelcomePage();
+        });
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" onclick="showWelcomePage()">Smart Contract Manager</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form id="LoginForm" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input id="search-text1" type="text" placeholder="Search ..." class=" search-box">
+                    </div>
+                    <div class="form-group">
+                        <input id="loginId" type="text" placeholder="UserId" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input id="loginPassword" type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button id="login-button" type="button" class="btn btn-success">Sign in</button>
+                    <!--                    <button id="showSignUp" type="button" class="btn btn-success">Sign Up</button>-->
+                </form>
+                <form id="LoggedInForm" class="navbar-form navbar-right">
+
+                    <input id="search-text" type="text" title="Search children, by ID, name, tags...!" placeholder="Search ..." class="form-control search-box">
+                    <button type="button" class="btn btn-success">Wallet : <span class="badge" id="my-balance">0</span></button>
+                    <!--                    <button type="button" class="btn btn-success" onclick="readMyOpenActions()">My Actions <span class="badge" id="my-action-count">0</span></button>-->
+                    <button id="user-button" data-toggle="tooltip" data-placement="bottom" title="Edit Your Profile!" type="button" class="btn btn-info" onclick="showMyProfile()"><span class="glyphicon glyphicon-user"></span>User ID</button>
+                    <button type="button" class="btn btn-success" onclick="signOut()">Sign Out</button>
+                </form>
+
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+    <br>
+
+    <div id="aboutProject" class="container modal-about">
+        <br>
+        <div id="myCarousel" class="carousel slide modal-about-content" data-ride="carousel">
+            <!--            <span id="close-signup-form2" class="closeAbout">Close &times;</span>-->
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+
+                <div class="item active">
+                    <img src="img/Slide1.PNG" alt="Chania" width="640" height="680">
+                    <!--
+<div class="carousel-caption">
+    <h3>Chania</h3>
+    <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+</div>
+-->
+                </div>
+
+                <div class="item">
+                    <img src="img/Slide2.PNG" alt="Chania" width="460" height="645">
+                </div>
+
+                <div class="item">
+                    <img src="img/Slide3.PNG" alt="Flower" width="460" height="345">
+                </div>
+
+                <div class="item">
+                    <img src="img/Slide4.PNG" alt="Flower" width="460" height="345">
+                </div>
+
+                <div class="item">
+                    <img src="img/Slide5.PNG" alt="Flower" width="460" height="345">
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div id="container-div" class="row">
+            <div id="droppable-div" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                <div id="quicklinks-div" ondragstart="drag(event)" draggable="false" class="col-md-2 main-content-div">
+                    <div id="quick-links-draggable-div" class="affixed">
+                        <div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">My Dashboard</h3>
+                                </div>
+                            </div>
+                            <div id="dashboard-links">
+                                <!--                                <a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a>-->
+                                <!--
+                                <h4>By Category</h4>
+                                <div id="category-links"></div>
+-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="main-contents-div" ondragstart="drag(event)" draggable="false" class="col-md-10">
+                    <div id="main-content-draggable-div">
+                        <div id="main-page-div">
+                            <div class="panel panel-info affixed">
+                                <div class="panel-heading">
+                                    <h3 id="page-heading" class="panel-title center">Welcome to Smart Contract Management <span class="glyphicon glyphicon-question-sign"></span></h3>
+                                </div>
+                            </div>
+
+                            <div id="WelcomePage-Div">
+                                <h3>Features</h3>
+                                <ul>
+                                    <li>Design, develop, publish contracts</li>
+                                    <li>View and update associated contracts</li>
+                                    <li>Status Reports of published contracts</li>
+                                    <li>Distribution of funds and aid upon contract completion</li>
+                                </ul>
+
+                            </div>
+
+
+
+                            <div id="NewContract-Div">
+                                <table class="table">
+                                    <tr>
+                                        <td>Contract Source Code : </td>
+                                        <td>
+                                            <textarea name="Text1" id="ContractSourceCode" title="Sample Source Code" , cols="40" rows="5" style="text-align:  left;"></textarea>
+                                            <button type="button" class="btn1" id="edit-sourceCode-button">Edit In Remix Browser</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Target Users : </td>
+                                        <td id="TargetUsres-name">
+                                            <textarea id="TargetUsers" title="Comma seperated list of addresses" , placeholder="0x382b0fc724C8b170251EA9A65ec4F97BD793683b, ..." , cols="40" rows="5"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Promised Amount : </td>
+                                        <td>
+                                            <input type="text" , id="NewContract-PromisedAmount" , placeholder="400">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bonus Amount : </td>
+                                        <td>
+                                            <input type="text" , id="NewContract-BonusAmount" , title="Optional Bonus Amount" , placeholder="400">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Document Proof : </td>
+                                        <td>
+                                            <input type="checkbox" , id="NewContract-DocProof">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Peer Review : </td>
+                                        <td>
+                                            <input type="checkbox" , id="NewContract-peerReview">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contract Reference Name : </td>
+                                        <td>
+                                            <input type="text" , id="NewContract-contractName" placeholder="SampleContract1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="button" class="btn1" id="createContract-submit-button">Create Contract</button>
+                                        </td>
+                                    </tr>
+                                    <tr id="contractStatus"></tr>
+                                </table>
+                            </div>
+
+
+
+                            <!--                            User / Staff pages-->
+                            <div id="MyContracts-Div" ng-controller="DocController">
+                                <table class="table">
+                                    <tr>
+                                        <th>Contract Name</th>
+                                        <th>Contract Address</th>
+                                        <th>Owner</th>
+                                        <th>Owner Address</th>
+                                        <th>My Role</th>
+                                        <th>Actions</th>
+                                        <th>Actions</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    <tr ng-repeat='c in contracts'>
+                                        <td>{{c.cName}}</td>
+                                        <td>{{c.cAddress}}</td>
+                                        <td>{{c.owner}}</td>
+                                        <td>{{c.ownerAddress}}</td>
+                                        <td>{{c.myRole}}</td>
+                                        <td>
+                                            <button class="btn btn-success" onclick=copyABI({{c.abi}})>Copy ABI</button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" onclick='contractStatus("{{c.cAddress}}")'>Status</button>
+                                            <td>
+                                                <button class="btn btn-success" onclick=revokeContract( '{{c.cAddress}}')>Revoke</button>
+                                            </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="ContractStatus-Div">
+                                <!--                                <div>-->
+
+                                <!--                                </div>-->
+                                <table class="table">
+                                    <tr>
+                                        <td>Contract Address : </td>
+                                        <td>
+                                            <input type="text" id="ContractStatusAddress" />
+                                            <button id="ContractStatusLoadButton" class="btn btn-success" onclick="loadContractStatus()">Load</button>
+                                            <textarea id="ContractStatusABI" rows="4" placeholder="Please provide ABI if not loaded"></textarea>
+                                        </td>
+                                    </tr>
+                                    <!--                                    <h3>Contract Status</h3>-->
+                                    <!--                                    <div id="chartContainer" style="height: 170px; width: 600px;"></div>-->
+                                    <!--                                    <div id="myChart" style="height: 170px; width: 600px;"></div>-->
+                                    <tr>
+                                        <td>Engagement Status</td>
+                                        <td>
+                                            <canvas id="engagementChart" width="600" height="150"></canvas>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount Distributed</td>
+                                        <td>
+                                            <canvas id="amountChart" width="600" height="150"></canvas>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Actions : </td>
+                                        <td>
+                                            <button id="ContractStatusRevokeButton" class="btn btn-success" title="Withdraw balance to the contract owner" onclick="revokeContract()">Revoke</button>
+                                            <button id="ContractStatusDistributeButton" class="btn btn-success" title="Force close and distribute amount to all" onclick="forceDistribute()">Force Close</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="UpdateContract-Div">
+                                <table class="table">
+                                    <tr>
+                                        <td>Contract Address : </td>
+                                        <td>
+                                            <input type="text" id="UpdateContractAddress" />
+                                            <button id="UpdateContractLoadButton" class="btn btn-success" onclick="loadContractDetais()">Load</button>
+                                            <textarea id="UpdateContractABI" rows="4" placeholder="Please provide ABI if not loaded"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Address : </td>
+                                        <td>
+                                            <input type="text" id="UpdateContract-MyAddress" placeholder="100" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Gas Limit : </td>
+                                        <td>
+                                            <input type="text" id="UpdateContract-MyGasLimit" placeholder="100" />
+                                            <button id="UpdateContractLoadSelfDataButton" class="btn btn-success" onclick="populateSelfData()">Load</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Data : </td>
+                                        <td>
+                                            <input type="text" id="UpdateContract-data" placeholder="100" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Doc Hash : </td>
+                                        <td>
+                                            <input type="file" id="myFile">
+                                            <input type="text" id="UpdateContract-hash" placeholder="80d8d4e4a02639c..." />
+                                            <button id="UpdateContractUpdateSelfDataButton" class="btn btn-success" onclick="updateSelfData()">Update</button>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Peer Reviewer : </td>
+                                        <td id="UpdateContract-peer">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status : </td>
+                                        <td id="UpdateContract-status">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount Received : </td>
+                                        <td id="UpdateContract-amount">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="PeerReview-Div">
+                                <table class="table">
+                                    <tr>
+                                        <td>Contract Address : </td>
+                                        <td>
+                                            <input type="text" id="PeerReviewAddress" />
+                                            <button id="PeerReviewLoadButton" class="btn btn-success" onclick="loadPeerReviewContractDetais()">Load</button>
+                                            <textarea id="PeerReviewABI" rows="4" placeholder="Please provide ABI if not loaded"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Address : </td>
+                                        <td>
+                                            <input type="text" id="PeerReview-MyAddress" placeholder="100" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Gas Limit : </td>
+                                        <td>
+                                            <input type="text" id="PeerReview-MyGasLimit" placeholder="100" />
+                                            <!--                                            <button id="UpdateContractLoadSelfDataButton" class="btn btn-success" onclick="populateSelfData()">Load</button>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Peer : </td>
+                                        <td>
+                                            <input type="text" id="PeerReviewTargetAddress" title="Address of target user" placeholder="100" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Doc Hash : </td>
+                                        <td>
+                                            <input type="checkbox" id="PeerReviewCheckBox" />
+                                            <button id="PeerReviewUpdateButton" class="btn btn-success" onclick="updatePeerReview()">Update</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="UserController-Div" ng-controller="DocController">
+                                <table class="table">
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Select</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    <tr ng-repeat='u in users'>
+                                        <td>{{u.userId}}</td>
+                                        <td>{{u.userName}}</td>
+                                        <td>{{u.address}}</td>
+                                        <td>
+                                            <input type="checkbox" id="userCheckBox" +{{u.userId} />
+                                        </td>
+                                        <td>
+                                            <button id="UserController-reset-password-button" class="btn btn-success" onclick="copyAddress('{{u.address}}')">Copy</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="MyProfile-div">
+                                <table class="table">
+                                    <tr>
+                                        <td>User ID : </td>
+                                        <td id="MyProfile-id"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name : </td>
+                                        <td id="MyProfile-name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address : </td>
+                                        <td id="MyProfile-address"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password : </td>
+                                        <td>
+                                            <input type="password" name="MyProfile-newPassword" id="MyProfile-newPassword" placeholder="Your new password, leave it blank not to update" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> Email Id : </td>
+                                        <td>
+                                            <input type="email" name="MyProfile-email" class="" id="MyProfile-email" placeholder="Your email" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="button" class="btn btn-success" id="MyProfile-submit-button" onClick="updateMyProfile()">Update</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="CreateAccount-Div">
+                                <table class="table">
+                                    <tr>
+                                        <td>User Name : </td>
+                                        <td>
+                                            <input type="text" id="CreateAccountUserName" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>User ID : </td>
+                                        <td>
+                                            <input type="text" id="CreateAccountUserID" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password : </td>
+                                        <td>
+                                            <input type="text" id="CreateAccountPassword" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Registered Address : </td>
+                                        <td id="CreateAccountAddress">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="button" class="btn btn-success" id="CreateAccount-submit-button" onClick="createAccount()">Update</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                            <div id="SystemDetails-Div">
+                                <table class="table">
+                                    <tr>
+                                        <td>Gas Price : </td>
+                                        <td id="SystemGasPrice"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available Accounts : </td>
+                                        <td id="SystemAccounts"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Block : </td>
+                                        <td id="SystemCurrentBlock"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CoinBase : </td>
+                                        <td id="SystemCoinBase">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Provider : </td>
+                                        <td id="SystemProvider">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>WatchDog Updates : </td>
+                                        <td>
+                                            <input type="checkbox" id="SystemWatchDog" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gas Limit : </td>
+                                        <td>
+                                            <input type="text" id="SystemGasLimit" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="button" class="btn btn-success" id="System-submit-button" onClick="updateSystemDetails()">Update</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div id="status-message-div">
+                                        <center>
+                                            <h3 id="status-message" class="panel-title"></h3>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span id="close-signup-form" class="close">&times;</span>
+                        <h3 class="panel-title">Blog Chat</h3>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <!--       <h3 id="signup-title">Please fill in your details</h3>-->
+                    <h4 id="validUser" class="red-error"></h4>
+                    <form class="signin-form">
+                        <input type="text" name="userid" class="" id="userid" placeholder="User ID" required data-validation-required-message="Please specify your User Id!" onKeyUp="validateUser(this.value)" />
+                        <input type="password" name="password" class="" id="password" placeholder="Password" required data-validation-required-message="Please give your password" />
+                        <!--            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>-->
+                        <input type="text" name="FullName" class="name" id="username" placeholder="Full Name" required data-validation-required-message="Please give your password" />
+                        <textarea name="about" id="about" rows="2" placeholder="A line about yourself"></textarea>
+                        <button type="button" class="btn1" id="signup-button">SignUp</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <!--            <p align="center">A <a id="showAbout">project</a> by Praveen Vedha, &copy; 2017 Bogus Inc.</p>-->
+            <p align="center">A project for HackIT Social Impact, &copy; 2018 Bogus Inc.</p>
+        </footer>
+    </div>
+    <!-- /container -->
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <!--    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+    <!--    <script src="js/bootstrap.min.js"></script>-->
+</body>
+
+</html>

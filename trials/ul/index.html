@@ -1,0 +1,48 @@
+<html>
+
+<head>
+
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#fileuploader").uploadFile({
+                url: "/Js/rest/upload/base",
+                fileName: "UploadCheck.txt"
+            });
+
+            $("#fileuploader").uploadFile({
+                url: "c:/temp",
+                fileName: "myfile"
+            });
+
+
+
+            $("#singleupload").uploadFile({
+                url: "upload.php",
+                multiple: false,
+                dragDrop: false,
+                maxFileCount: 1,
+                fileName: "myfile"
+            });
+
+
+        });
+
+    </script>
+
+</head>
+
+
+<div id="fileuploader">Upload</div>
+
+<div id="fileuploaderx">Upload</div>
+
+
+<div id="singleupload">Single file upload
+</div>
+
+</html>

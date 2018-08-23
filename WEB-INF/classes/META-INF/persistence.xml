@@ -1,0 +1,42 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+	http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+	<persistence-unit name="doc" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>com.doc.api.DocUser</class>
+		<class>com.doc.api.Children</class>
+		<class>com.doc.api.Jobtitle</class>
+		<class>com.doc.api.DocState</class>
+		<class>com.doc.api.Actions</class>
+		<class>com.doc.api.ActionStates</class>
+		<class>com.doc.api.Document</class>
+		
+		<properties> 
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" /> 
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:dividb" />
+			<property name="javax.persistence.jdbc.user" value="doc"/>
+            <property name="javax.persistence.jdbc.password" value="doc"/>
+			<property name="hibernate.hbm2ddl.auto" value="update" /> 
+<!-- 			  -->
+<!-- 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" /> -->
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@10.78.213.217:1521:cmad" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="cmad"/> -->
+<!--             <property name="javax.persistence.jdbc.password" value="cmad"/> -->
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+
+			  
+<!-- 			oracle from AWS -->
+
+<!-- 	 	<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />  -->
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@cmad.cbxi21uehmd8.us-west-2.rds.amazonaws.com:1521:ORCL" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="cmad"/> -->
+<!--             <property name="javax.persistence.jdbc.password" value="cmadcmad"/> -->
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+		
+<!-- 			 -->
+			 
+		</properties>
+	</persistence-unit>
+</persistence>

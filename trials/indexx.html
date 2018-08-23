@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>MyBlogSite</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link rel="stylesheet" href="css/main.css">
+<script src="js/jquery-1.11.1.min.js"></script>
+<!--<script src="js/bootstrap.js"></script>-->
+<script src="js/signing.js"></script>
+<script src="js/post.js"></script>
+<script type="application/javascript">
+	
+    jQuery(document).ready(function($) {
+        
+        console.log("Data from localStorage",localStorage.getItem("userId"));
+        
+        if(localStorage.getItem("userId") !== null && localStorage.getItem("token")){
+            validateSession();
+        } else {
+            showLoginPage();
+        }        
+        
+    });    
+
+</script>
+
+</head>
+<body>
+        
+	<div class="header-div">
+		<div id="title-div" class="title-left-div">
+			<h1 class="h1-title">CMAD Blog </h1>
+		</div>
+		<div id="user-div" class="user-right-div">
+            <div id="current-user-icon"><img class="img-grayed" src="img/48px-User_icon_2.svg.png"/></div>
+            <div id="user-detail-div" class="user-detail-div">Login</div>
+		</div>
+	</div>
+	<br>
+
+	<!--    mainpage-->
+	<div id="mainPage">
+
+		<div id="controlBar" class="controller-bar-div">
+            <table width="100%"><tr>
+                <td width="70%"><button type="button" id="newPost-button" class="control-button"
+				    onclick="showNewPost()">New Post</button>
+			         <button type="button" id="search-button" class="control-button"
+			             onclick="searchAllPosts()">Search Contents</button>
+			         <input type="text" id="search-text" class="search-box"
+				        placeholder="Enter Search Text..." />
+                </td>
+                <td width="30%" align="right" ><button type="button" id="UpdateProfile-button" class="control-button"
+				onclick="viewProfile()">Edit Profile</button>
+                <button type="button" id="signout-button" class="control-button"
+				onclick="signOut()">Sign out</button></td></tr></table>
+		</div>
+		<div class="center-align-div">
+			<div id="shortlinks-div" class="left-div">
+                <p class="quicklink-title">Quick Links</p>
+				<br>
+				<a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a><hr>
+                
+				<p class="quicklink-title">Categories</p>
+				<div id="category-links"></div><hr>
+				<p class="quicklink-title"><img src="img/22xFavourite.png"> Favourite Posts</p>
+				<div id="favourite-links"></div>
+
+			</div>
+			<div id="post-div" class="center-div">
+				<h2>Latest Posts</h2>
+				<h4 id="post-info"></h4>
+				<div id="post-contents" class="post-contents-div"></div>
+			</div>
+            <div id="view-post-div" class="center-div">
+				<h2>View Post</h2>
+                <h4 id="view-post-info"></h4>
+                <p id="view-post-title" class="view-post-title">Title Comes here</p>
+				<p id="view-post-message" class="post-message">The post message comes here</p>
+                <div class="view-post-detail-div">
+                    <p id="view-post-by" class="view-post-detail">Posted by : <b>User Name</b> </p>
+                    <p id="view-post-time" class="view-post-detail">Posted On : <b>time comes here</b></p>
+                    <p id="view-post-tags" class="view-post-detail">Tags : <b>tags comes here</b></p>
+                    <p id="view-post-category" class="view-post-detail">Category : <b>category comes here</b></p>
+                </div>
+                <hr>
+                <div id="add-favourite-div"></div>                
+                <hr>
+                <p class="quicklink-title"> Comments </p>
+                <div id="view-post-comments-div"></div>         
+                
+                
+                <hr>
+                <form id="post-comment-form" class="signin-form">
+                    <textarea id="comment-textarea" placeholder="Enter your comment"></textarea>
+                    <button id="post-comment-button" class="btn1">Post Comment</button>
+                    <h4 id="new-comment-info"></h4>
+                    </form>
+                    
+                
+                <div id="view-post-comments"></div>
+			</div>
+			<div id="new-post-div" class="center-div">
+				<h2>Add a new Post</h2>
+				<h4 id="new-post-info"></h4>
+				<div id="new-post-contents">
+
+					<form class="signin-form">
+						<input type="text" name="new-post-title" class=""
+							id="new-post-title" placeholder="Title of the post" />
+						<textarea name="new-post-message" id="new-post-message" rows="3"
+							placeholder="Your message..."></textarea>
+						<input type="text" name="new-post-tags" class=""
+							id="new-post-tags" placeholder="Add related tags" /> Select
+						Category : <select name="Category" id="new-post-category"
+							placeholder="Select Category">
+							<!--
+              <option value="entertainment">Entertainment</option>
+              <option value="news">News</option>
+              <option value="technical">Technical</option>
+              <option value="generic">Generic</option>
+-->
+						</select>
+						<button type="button" class="btn1" id="newPost-submit-button">Post
+							it!</button>
+					</form>
+				</div>
+			</div>
+            <div id="user-profile-div" class="center-div">
+				<h2>Your Profile</h2>
+				<h4 id="user-profile-info"></h4>
+				<div id="user-profile-contents">
+					<form class="signin-form" id="user-profile-form">
+                        <div id="user-profile-fixed" title="Non editable fields">User ID : <b>PVedha</b><br>Name : <b>Praveen Vedha</b></div> 
+<!--
+						<input type="text" name="view-profile-userId" class=""
+							id="view-profile-userId" disabled/>
+-->
+                        <input type="text" name="view-profile-newPassword" class=""
+							id="view-profile-newPassword" placeholder="Your new password, leave it blank not to update" />
+                        About Yourself : 
+						<textarea name="view-profile-about" id="view-profile-about" rows="3"
+							placeholder="Few lines about yourself"></textarea>					
+						<button type="button" class="disabled-button" id="user-profile-update" onClick="updateProfile()">Update</button>
+					</form>
+				</div>
+			</div>
+			<div id="chat-div" class="right-div">
+                 <h2 id="chat-info">Quick Chat</h2>
+				<div id="show-chat-div"></div>
+				<textarea name="new-chat-message" id="new-chat-message" rows="3"
+							placeholder="Your chat message..."></textarea>
+				<button type="button" class="btn1" id="newChat-submit-button">send</button>
+			</div>
+		</div>
+
+	</div>
+	<!--    End of mainpage-->
+
+<!--	<hr>-->
+
+	<div id="loginPage">
+		<div class="login-div" id="signin-form">
+			<h3>Please login / Signup</h3>
+			<h4 id="loginMessage" class="green-fine"></h4>
+			<form class="signin-form">
+				<input type="text" name="userid" class="" id="loginId"
+					placeholder="User ID" required
+					data-validation-required-message="Please specify your User Id!" />
+				<input type="password" name="password" class="" id="loginPassword"
+					placeholder="Password" required
+					data-validation-required-message="Please give your password" />
+				<button class="btn1" type="button" id="showSignUp">Sign Up</button>
+				<button class="btn1" type="button" id="login-button">Login</button>
+			</form>
+		</div>
+		<div class="login-div" id="signup-form">
+			<h3 id="signup-title">Please fill in your details</h3>
+			<h4 id="validUser" class="red-error"></h4>
+			<form class="signin-form">
+				<input type="text" name="userid" class="" id="userid"
+					placeholder="User ID" required
+					data-validation-required-message="Please specify your User Id!"
+					onKeyUp="validateUser(this.value)" /> <input type="password"
+					name="password" class="" id="password" placeholder="Password"
+					required
+					data-validation-required-message="Please give your password" />
+				<!--            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>-->
+				<input type="text" name="FullName" class="name" id="username"
+					placeholder="Full Name" required
+					data-validation-required-message="Please give your password" />
+				<textarea name="about" id="about" rows="2"
+					placeholder="A line about yourself"></textarea>
+				<button type="button" class="btn1" onclick="toggleSignform()">Login</button>
+				<button type="button" class="btn1" id="signup-button">SignUp</button>
+			</form>
+		</div>
+       
+	</div>
+    <br>
+    <hr style="height: 3px; margin: 10px 0 10px 0" color=brown>
+    <p align='center'>A Project by Praveen Vedha and Aswin Kuppusami</p>
+    <p align='center'>All Rights Reserved © </p>
+<!--
+    <div id="debug-div">
+	<button class="btn1" id="trythis-button">TryThis</button>
+	<button class="btn1" id="trythis2-button">TryThis2</button>
+    <button class="btn1" id="quick-login-debug" onClick='skipLogin()'>Quick login</button>
+	<div class="center-div" id="result-div" ></div>
+    </div>
+-->
+
+</body>
+</html>

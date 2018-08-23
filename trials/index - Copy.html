@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BlogPostApp">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!--    <link rel="icon" href="../../favicon.ico">-->
+      <title>My Very Own Blog Site</title>
+      <!-- Bootstrap core CSS -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom styles for this template -->
+      <link href="css/jumbotron.css" rel="stylesheet">
+      <link href="css/blog.css" rel="stylesheet">
+       <link href="css/main.css" rel="stylesheet">
+        
+      <script src="js/jquery-1.11.1.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+       <script src='js/angular.js'></script>
+				<script src='js/blogAngular.js'></script> 
+       <script src="js/signing.js"></script>
+<script src="js/post.js"></script>
+       <script src="js/blogModal.js"></script>
+       
+       <script type="application/javascript">
+	
+    jQuery(document).ready(function($) {        
+                
+    });    
+
+       </script>
+   <script>
+//if(typeof(EventSource) !== "undefined") {
+//    var source = new EventSource("server-send.php");
+//    source.onmessage = function(event) {
+//        console.log(event.data);
+//    };
+//} else {
+//    console.log("Sorry, your browser does not support server-sent events...");
+//}
+       
+      
+</script>
+   </head>
+   <body>       
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="#">CMAD Blog Site</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+<!--
+               <form id="NotLogged" class="navbar-form navbar-right">
+                  <input type="text" placeholder="Search ..." class="form-control search-box">
+                  <button type="button" class="btn btn-success">Sign Up</button>
+                  <button type="button" class="btn btn-success">Sign in</button>
+               </form>
+-->
+               <form id="LoginForm" class="navbar-form navbar-right">
+                  <div class="form-group">
+                      <input id="search-text1" type="text" placeholder="Search ..." class=" search-box">
+                   </div>
+                  <div class="form-group">
+                     <input id="loginId" type="text" placeholder="UserId" class="form-control">
+                  </div>
+                  <div class="form-group">
+                     <input id="loginPassword" type="password" placeholder="Password" class="form-control">
+                  </div>
+                  <button id="login-button" type="button" class="btn btn-success">Sign in</button>
+                  <button id="showSignUp" type="button" class="btn btn-success">Sign Up</button>
+               </form>                 
+                <form id="LoggedInForm" class="navbar-form navbar-right">        
+                    <input id="search-text" type="text" placeholder="Search ..." class="form-control search-box">
+                    
+                   <button type="button" class="btn btn-success" onclick="showNewPost()">New Post</button>                    
+                  <button id="user-button" data-toggle="tooltip" data-placement="bottom" title="Edit Your Profile!" type="button" class="btn btn-info" onclick="viewProfile()"><span class="glyphicon glyphicon-user" ></span>User ID</button>
+                  <button type="button" class="btn btn-success" onclick="signOut()">Sign Out</button>
+               </form>
+                
+            </div>
+            <!--/.navbar-collapse -->
+         </div>
+      </nav>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <!--
+         <div class="jumbotron">
+           <div class="container">
+             <h1>Hello, world!</h1>
+             <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+             <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+           </div>
+         </div>
+         -->
+       <br>
+      <div class="container">
+         <!-- Example row of columns -->
+         <div class="row">
+            <div id="quicklinks-div" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
+                <div id="quick-links-draggable-div"  ondragstart="drag(event)" draggable="true" class="affixed">
+               <div>
+                   <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Quick Links</h3>                            
+                        </div>
+                   </div>
+                   <a class='quicklink-links' href='#' onClick=readAllPosts()>Load All Posts</a>
+                  <h4>By Category</h4>
+                  <div id="category-links"></div>                  
+               </div>
+               <div>
+                  <h4>Favourite Posts</h4>
+                  <div id="favourite-links" ></div>                   
+               </div>
+                </div>
+            </div>
+             <div id="post-div" class="col-md-8">   
+                <div class="panel panel-info affixed">
+                        <div class="panel-heading">
+                            <h3 id="posts-heading" class="panel-title center">Latest Posts</h3>
+                        </div>
+                   </div>
+<!--                 <h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br>-->
+<!--                 <h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br><h1>Some text to enable scrolling</h1><br><br><hr><br>-->
+                                                                   
+				<h4 id="post-info"></h4>
+<!--				<div id="post-contents" class="post-contents-div"></div> -->
+                 <div id="BlogPostController-Div" ng-controller="BlogPostController">
+                 
+                <table class="table">
+<!--				<tr><th>Title</th><th>Message</th></tr>-->
+				<tr ng-repeat='p in posts'>
+					<td>                    
+                        <a href="#" onclick=viewPost({{p.postId}})><p class='post-title'>{{p.title}}</p></a>
+                        <p class='post-message'> {{p.message}} </p>
+                        <p class='post-detail'> <span class='glyphicon glyphicon-user'></span>  <b>{{p.userName}}</b> ,
+                        <span>   </span> <span class='glyphicon glyphicon-time'></span> : {{p.postedOn}} , 
+                        <span class='glyphicon glyphicon-comment'></span> <span class='badge'>{{p.commentsCount}}</span></p>
+                    </td>
+                    
+				</tr>
+			     </table>
+                 </div>
+                 <div class="panel panel-info">
+                        <div class="panel-heading"> <div id="loading-more">
+                            <center><h3 class="panel-title">Loading More Posts .... <img style="width:24px;height:24px;" src="img/loading_128.gif"> </h3>
+                                </center>
+                            </div>                           
+                            <div id="thats-all"><center><h3 class="panel-title">Thats all for now. Go get a life!</h3>
+                                </center></div>
+                        </div>              
+                   </div>                       
+             </div>
+            <div id="view-post-div" class="col-md-8">               
+               <div class="panel panel-info"><div class="panel-heading">
+                            <h3 id="posts-heading" class="panel-title center">View Post</h3>
+                   </div></div>
+                <h4 id="view-post-info"></h4>
+                <p id="view-post-title" class="view-post-title">Title Comes here</p>
+				<p id="view-post-message" class="post-message">The post message comes here</p>
+                <div class="view-post-detail-div">
+                    <p id="view-post-by" class="view-post-detail">Posted by : <b>User Name</b> </p>
+                    <p id="view-post-time" class="view-post-detail">Posted On : <b>time comes here</b></p>
+                    <p id="view-post-tags" class="view-post-detail">Tags : <b>tags comes here</b></p>
+                    <p id="view-post-category" class="view-post-detail">Category : <b>category comes here</b></p>
+                </div>
+                <hr>
+                <div id="add-favourite-div"></div>                
+                <hr>
+                <p class="quicklink-title"> Comments </p>
+                <div id="view-post-comments-div"></div>         
+                
+                
+                <hr>
+                <form id="post-comment-form" class="signin-form">
+                    <textarea id="comment-textarea" placeholder="Enter your comment"></textarea>
+                    <button id="post-comment-button" class="btn1">Post Comment</button>
+                    <h4 id="new-comment-info"></h4>
+                    </form>                
+                
+                <div id="view-post-comments"></div>
+            </div>
+             
+             
+             
+             <div id="new-post-div" class="col-md-8">
+               <div class="panel panel-info"><div class="panel-heading">
+                            <h3 class="panel-title center">Add a new post</h3>
+                   </div></div>
+				<h4 id="new-post-info"></h4>
+				<div id="new-post-contents">
+
+					<form class="signin-form">
+						<input type="text" name="new-post-title" class=""
+							id="new-post-title" placeholder="Title of the post" />
+						<textarea name="new-post-message" id="new-post-message" rows="3"
+							placeholder="Your message..."></textarea>
+						<input type="text" name="new-post-tags" class=""
+							id="new-post-tags" placeholder="Add related tags" /> Select
+						Category : <select name="Category" id="new-post-category"
+							placeholder="Select Category">							
+						</select>
+						<button type="button" class="btn1" id="newPost-submit-button">Post
+							it!</button>
+					</form>
+				</div>
+            </div>
+             
+             <div id="user-profile-div" class="col-md-8">
+				<div class="panel panel-info"><div class="panel-heading">
+                            <h3 class="panel-title center">Your Profile</h3>
+                   </div></div>
+				<h4 id="user-profile-info"></h4>
+				<div id="user-profile-contents">
+					<form class="signin-form" id="user-profile-form">
+                        <div id="user-profile-fixed" title="Non editable fields">User ID : <b>PVedha</b><br>Name : <b>Praveen Vedha</b></div> 
+<!--
+						<input type="text" name="view-profile-userId" class=""
+							id="view-profile-userId" disabled/>
+-->
+                        <input type="text" name="view-profile-newPassword" class=""
+							id="view-profile-newPassword" placeholder="Your new password, leave it blank not to update" />
+                        About Yourself : 
+						<textarea name="view-profile-about" id="view-profile-about" rows="3"
+							placeholder="Few lines about yourself"></textarea>					
+						<button type="button" class="disabled-button" id="user-profile-update" onClick="updateProfile()">Update</button>
+					</form>
+				</div>
+			</div>
+             
+             
+            <div id="chat-div" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-2 main-content-div">
+                <div id="chat-div-draggable" draggable="true"  ondragstart="drag(event)" class="affixed">
+                  <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Blog Chat</h3>
+                        </div>
+                   </div>
+                  <div id="show-chat-div" class="sub-content-div"></div>                
+				<textarea name="new-chat-message" id="new-chat-message" rows="3"
+							placeholder="Your chat message..." class="form-control"></textarea>
+                				<button type="button" class="btn btn-success" id="newChat-submit-button">send</button>
+             </div>
+                </div>
+         </div>
+         <hr>
+          
+                    
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    
+    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <span id="close-signup-form" class="close">&times;</span>
+                            <h3 class="panel-title">Blog Chat</h3>
+                        </div>
+                   </div>
+    <div class="modal-body">
+<!--       <h3 id="signup-title">Please fill in your details</h3>-->
+			<h4 id="validUser" class="red-error"></h4>
+			<form class="signin-form">
+				<input type="text" name="userid" class="" id="userid"
+					placeholder="User ID" required
+					data-validation-required-message="Please specify your User Id!"
+					onKeyUp="validateUser(this.value)" /> <input type="password"
+					name="password" class="" id="password" placeholder="Password"
+					required
+					data-validation-required-message="Please give your password" />
+				<!--            <input type="email" name="email" class="email" id="email" placeholder="Email ID" required data-validation-required-message="Please specify your User Id!"/>-->
+				<input type="text" name="FullName" class="name" id="username"
+					placeholder="Full Name" required
+					data-validation-required-message="Please give your password" />
+				<textarea name="about" id="about" rows="2"
+					placeholder="A line about yourself"></textarea>				
+				<button type="button" class="btn1" id="signup-button">SignUp</button>
+			</form>
+    </div>    
+  </div>
+
+</div>
+          
+          
+          
+          
+          
+          
+         <footer>
+            <p>A project by Praveen Vedha and Aswin Kuppusami, &copy; 2017 Cisco.</p>
+         </footer>
+      </div>
+      <!-- /container -->
+      <!-- Bootstrap core JavaScript
+         ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+      <!--    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+      <!--    <script src="js/bootstrap.min.js"></script>-->
+   </body>
+</html>
